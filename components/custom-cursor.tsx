@@ -8,8 +8,7 @@ export function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isVideoHover, setIsVideoHover] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [cursorText, setCursorText] = useState("");
-  const [isInSidebar, setIsInSidebar] = useState(false); // New State
+  const [isDarkBackground, setIsDarkBackground] = useState(false); // Detects dark background
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -18,7 +17,7 @@ export function CustomCursor() {
 
   useEffect(() => {
     const updateCursor = (e: MouseEvent) => {
-      const size = isHovering || isVideoHover ? 80 : 30; // Reduce normal size
+      const size = isHovering || isVideoHover ? 80 : 20; // Default size 10px
       mouseX.set(e.clientX - size / 2);
       mouseY.set(e.clientY - size / 2);
 
@@ -28,22 +27,37 @@ export function CustomCursor() {
       ) as HTMLElement;
       if (!target) return;
 
-      // Check if inside the sidebar
-      setIsInSidebar(!!target.closest("[data-cursor='sidebar']"));
-
       if (target.closest("[data-cursor='video']")) {
         setIsVideoHover(true);
         setIsHovering(false);
-        setCursorText("");
         return;
       }
 
       setIsVideoHover(false);
       const isInteractive = target.closest("a, button, .cursor-pointer");
-      const isCard = target.closest("[data-cursor='explore']");
 
-      setIsHovering(!!isInteractive || !!isCard);
-      setCursorText(isCard ? "Explore" : "");
+      setIsHovering(!!isInteractive );
+
+      // **Detect background color**
+      let bgColor = window.getComputedStyle(target).backgroundColor;
+      if (bgColor === "rgba(0, 0, 0, 0)") {
+        // If it's transparent, check the parent
+        let parent = target.parentElement;
+        while (parent && bgColor === "rgba(0, 0, 0, 0)") {
+          bgColor = window.getComputedStyle(parent).backgroundColor;
+          parent = parent.parentElement;
+        }
+      }
+
+      // Convert bg color to RGB values and check brightness
+      const match = bgColor.match(/\d+/g);
+      if (match) {
+        const r = parseInt(match[0]);
+        const g = parseInt(match[1]);
+        const b = parseInt(match[2]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        setIsDarkBackground(brightness < 128);
+      }
     };
 
     document.addEventListener("mousemove", updateCursor);
@@ -63,35 +77,43 @@ export function CustomCursor() {
       style={{
         x: smoothX,
         y: smoothY,
-        backgroundColor: isInSidebar ? "black" : "white", // Change color in sidebar
-        width: isHovering || isVideoHover ? 80 : 30, // Normal cursor is smaller
-        height: isHovering || isVideoHover ? 80 : 30,
+        backgroundColor:
+          isHovering || isVideoHover
+            ? "white"
+            : isDarkBackground
+            ? "white"
+            : "black",
+        border:
+          isHovering || isVideoHover
+            ? "2px solid rgba(255, 255, 255, 0.5)"
+            : "none", // White border when hovering
+        width: isHovering || isVideoHover ? 60 : 10,
+        height: isHovering || isVideoHover ? 60 : 10,
         mixBlendMode: isHovering
-          ? "normal"
-          : isInSidebar
-          ? "normal"
-          : "difference", // Ensure visibility
+          ? "difference"
+          : isDarkBackground
+          ? "difference"
+          : "normal",
       }}
       animate={{
-        scale: isHovering ? 1.1 : isVideoHover ? 1.3 : 1,
+        scale: isHovering ? 1.3 : isVideoHover ? 1.5 : 1,
         opacity: isVisible ? 1 : 0,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      {isVideoHover ? (
-        <motion.div
-          className="flex items-center justify-center w-full h-full bg-white rounded-full"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 300, damping: 15 }}
-        >
-          <Play size={32} strokeWidth={2} className="text-black" />
-        </motion.div>
-      ) : (
-        cursorText && (
-          <motion.span className="text-black">{cursorText}</motion.span>
-        )
-      )}
+      <motion.div>
+        {isVideoHover ? (
+          <motion.div
+            className="flex items-center justify-center w-full h-full bg-white rounded-full"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          >
+            <Play size={50} strokeWidth={2} className="text-black" />
+          </motion.div>
+        ) : null}{" "}
+        {/* Add a fallback (null) or another element if needed */}
+      </motion.div>
     </motion.div>
   );
 }

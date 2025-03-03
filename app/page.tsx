@@ -17,23 +17,23 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white relative">
       {/* Custom Cursor - Global */}
-      <CustomCursor/>
+      <CustomCursor />
 
       {/* Header (Fixed at the top) */}
-      <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between p-6 bg-white/80 backdrop-blur-md shadow-md w-full">
-        <div className="text-xl font-medium">cuberto</div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm">menu</span>
+      <div className="top-2 left-0 right-0 flex items-center justify-between py-10 px-12 w-full">
+        <Button className="text-2xl font-semibold">cuberto</Button>
+        <div className="flex items-center gap-6">
+          <span className="text-lg font-medium">menu</span>
           <Button
             variant="ghost"
             size="icon"
             className="text-black"
             onClick={() => setIsSidebarOpen(true)}
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-10 w-10" />
           </Button>
         </div>
-      </header>
+      </div>
 
       {/* Sidebar */}
       {isSidebarOpen && (
@@ -75,7 +75,7 @@ export default function Home() {
       )}
 
       {/* Page Content (Add padding to avoid content getting hidden under the fixed header) */}
-      <main className="pt-24">
+      <main className="pt-0">
         <Dashboard />
         <VideoSection />
         <AboutPage />

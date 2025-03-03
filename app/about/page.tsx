@@ -43,12 +43,15 @@ export default function AboutPage() {
               Cuberto is a leading digital product agency focused on branding,
               UI/UX design, mobile, and web development.
             </h1>
-            <div className="relative group rounded-full border border-black px-24 py-10 text-4xl font-bold w-fit cursor-pointer overflow-hidden">
+            <div
+              className="relative group rounded-full border border-black px-24 py-10 text-4xl font-bold w-fit cursor-pointer overflow-hidden"
+              data-cursor="transition"
+            >
               {/* Background Transition Effect */}
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[200%] h-[400%] bg-black rounded-full scale-0 group-hover:scale-100 transition-transform duration-1000 ease-in-out will-change-transform"></span>
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[200%] h-[400%] bg-black rounded-full scale-0 group-hover:scale-100 transition-transform duration-[700ms] ease-out will-change-transform"></span>
 
               {/* Button Text */}
-              <span className="relative z-10 transition-colors duration-1000 ease-in-out will-change-color group-hover:text-white">
+              <span className="relative z-10 transition-colors duration-[700ms] ease-out will-change-color group-hover:text-white">
                 What we do
               </span>
             </div>

@@ -137,7 +137,7 @@ export default function Cardsp() {
                     />
 
                     {/* Overlay */}
-                    <div className="absolute inset-0 bg-black/40 transition-opacity duration-700 group-hover:opacity-0" />
+                    <div className="absolute inset-0 " />
                   </a>
                 </motion.div>
 
