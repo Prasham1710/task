@@ -24,7 +24,7 @@ export function SidebarNav({ onClose }: SidebarNavProps) {
   ];
 
   return (
-    <div className="flex h-full flex-col p-6">
+    <div className="flex h-full flex-col p-6 " data-cursor="sidebar">
       <div className="flex items-center justify-between mb-12">
         <div className="text-xl font-medium">cuberto</div>
       </div>
@@ -39,7 +39,7 @@ export function SidebarNav({ onClose }: SidebarNavProps) {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-lg font-medium text-neutral-800 transition-colors hover:text-neutral-500"
+                className="text-lg font-medium text-neutral-800 transition-colors hover:bg-black hover:text-white px-2 py-1 rounded"
               >
                 {link.name}
               </Link>
@@ -54,7 +54,7 @@ export function SidebarNav({ onClose }: SidebarNavProps) {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-3xl font-medium text-neutral-800 transition-colors hover:text-neutral-500"
+                className="text-3xl font-medium text-neutral-800 transition-colors hover:bg-black hover:text-white px-2 py-1 rounded"
               >
                 {link.name}
               </Link>
@@ -68,13 +68,16 @@ export function SidebarNav({ onClose }: SidebarNavProps) {
         <div className="mb-2">
           <Link
             href="mailto:info@cuberto.com"
-            className="text-lg font-medium text-neutral-800"
+            className="text-lg font-medium text-neutral-800 transition-colors hover:bg-black hover:text-white px-2 py-1 rounded"
           >
             info@cuberto.com
           </Link>
         </div>
         <div>
-          <Link href="#" className="text-lg font-medium text-neutral-800">
+          <Link
+            href="#"
+            className="text-lg font-medium text-neutral-800 transition-colors hover:bg-black hover:text-white px-2 py-1 rounded"
+          >
             Our workflow
           </Link>
         </div>

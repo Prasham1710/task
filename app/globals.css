@@ -208,3 +208,12 @@ html {
 .video-hover:hover {
   transform: scale(1.05);
 }
+
+.rotating-image {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.rotating-image img {
+  backface-visibility: hidden;
+}
