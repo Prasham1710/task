@@ -8,8 +8,8 @@ import { CustomCursor } from "@/components/custom-cursor";
 import AboutPage from "./about/page";
 import VideoSection from "./vdsection/page";
 import Contact from "./contact/page";
-import Dashboard from "./dasboard/page";
-import Cardsp  from "./Cardsp/page";
+import Dashboard from "./dasboard/page";import Cardsp from "./cards/page";
+;
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
