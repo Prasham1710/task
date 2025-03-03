@@ -8,31 +8,35 @@ import { CustomCursor } from "@/components/custom-cursor";
 import AboutPage from "./about/page";
 import VideoSection from "./vdsection/page";
 import Contact from "./contact/page";
-import Dashboard from "./dasboard/page";import Cardsp from "./cards/page";
-;
+import Dashboard from "./dasboard/page";
+import Cardsp from "./cards/page";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white relative">
-      {/* Custom Cursor - Global */}
+      {/* Custom Cursor */}
       <CustomCursor />
 
-      {/* Header (Fixed at the top) */}
-      <div className="top-2 left-0 right-0 flex items-center justify-between py-10 px-12 w-full">
+      {/* Header */}
+      <div className="top-2 left-0 right-0 flex items-center justify-between py-6 px-6 md:px-12 w-full">
         <Button className="text-2xl font-semibold">cuberto</Button>
-        <div className="flex items-center gap-6">
-          <span className="text-lg font-medium">menu</span>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-black"
-            onClick={() => setIsSidebarOpen(true)}
-          >
-            <Menu className="h-10 w-10" />
-          </Button>
-        </div>
+
+        {/* Hide Menu Icon When Sidebar is Open */}
+        {!isSidebarOpen && (
+          <div className="flex items-center gap-6">
+            <span className="text-lg font-medium">menu</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-black"
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <Menu className="h-10 w-10" />
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Sidebar */}
@@ -54,9 +58,9 @@ export default function Home() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.5 }}
-            className="fixed right-0 top-0 h-full w-1/2 bg-white z-50 shadow-lg"
+            className="fixed right-0 top-0 h-full w-full md:w-1/2 bg-white z-50 shadow-lg px-6 pt-8"
           >
-            {/* Close Button */}
+            {/* Close Button (Aligned Properly) */}
             <div className="absolute top-6 right-6">
               <Button
                 variant="ghost"
@@ -64,7 +68,7 @@ export default function Home() {
                 className="text-black"
                 onClick={() => setIsSidebarOpen(false)}
               >
-                <X className="h-6 w-6" />
+                <X className="h-10 w-10" />
               </Button>
             </div>
 
@@ -74,13 +78,15 @@ export default function Home() {
         </>
       )}
 
-      {/* Page Content (Add padding to avoid content getting hidden under the fixed header) */}
+      {/* Page Content */}
       <main className="pt-0">
         <Dashboard />
         <VideoSection />
         <AboutPage />
         <Cardsp />
-        <Contact />
+        <div className="hidden md:block">
+          <Contact />
+        </div>
       </main>
     </div>
   );

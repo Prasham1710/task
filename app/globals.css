@@ -6,36 +6,59 @@
 }
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-
-    --radius: 0.5rem;
+      --background: #ffffff;
+      --foreground: #171717;
+    }
+  
+@media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+    }
   }
+  
+    /* Hide default cursor */
+    * {
+      cursor: none !important;
+    }
+  
+    html {
+      scroll-behavior: smooth;
+    }
+  
+    /* Rotating image styles */
+    .rotating-image {
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+  
+    .rotating-image img {
+      backface-visibility: hidden;
+    }
+  
+    /* Video container styles */
+    .video-container {
+      cursor: none;
+    }
+  
+    .video-hover:hover {
+      transform: scale(1.05);
+    }
+  
+    /* Animation keyframes */
+    @keyframes spin-slow {
+      from {
+        transform: rotate(0deg);
+      }
+  
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  
+    .animate-spin-slow {
+      animation: spin-slow 10s linear infinite;
+    }
 
   .dark {
     --background: 0 0% 3.9%;
@@ -216,4 +239,94 @@ html {
 
 .rotating-image img {
   backface-visibility: hidden;
+}
+
+/* Add these responsive styles to your globals.css */
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  /* Typography adjustments */
+ 
+  
+  h2, .text-5xl, .text-6xl {
+    font-size: 2.5rem !important;
+  }
+  
+  h3, .text-3xl {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Layout adjustments */
+  .px-24, .px-12 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .py-24, .py-12 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  /* Grid adjustments */
+  .grid-cols-2, .grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Video container adjustments */
+  .video-container {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16/9;
+    position: relative !important;
+    top: 0 !important;
+    margin: 1rem 0 !important;
+  }
+  
+  /* Sidebar adjustments */
+  .w-1\/2 {
+    width: 80% !important;
+  }
+  
+  /* Custom cursor (hide on mobile) */
+  .custom-cursor {
+    display: none !important;
+  }
+  
+  /* Restore default cursor on mobile */
+  * {
+    cursor: auto !important;
+  }
+  
+  /* Adjust spacing */
+  .gap-8 {
+    gap: 1rem !important;
+  }
+  
+  /* Adjust rotating image */
+  .rotating-image {
+    transform: none !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  /* Restore default cursor behavior */
+  * {
+    cursor: auto !important;
+  }
+  
+  /* Hide custom cursor on touch devices */
+  .custom-cursor {
+    display: none !important;
+  }
+  
+  /* Show hover states by default on touch */
+  .video-hover {
+    transform: scale(1.05) !important;
+  }
+  
+  /* Optimize buttons for touch */
+  button, a {
+    padding: 0.75rem !important;
+  }
 }

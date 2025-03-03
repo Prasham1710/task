@@ -13,7 +13,7 @@ export default function VideoSection() {
           data-cursor="video"
           className="w-full h-full object-cover"
         >
-          <source src="/video.mp4" type="video/mp4" />
+          <source src="/v2.mp4" type="video/mp4" />
         </video>
       </div>
     </div>

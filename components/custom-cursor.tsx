@@ -7,8 +7,10 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isVideoHover, setIsVideoHover] = useState(false);
+  const [isCardHover, setIsCardHover] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [isDarkBackground, setIsDarkBackground] = useState(false); // Detects dark background
+  const [isDarkBackground, setIsDarkBackground] = useState(false);
+  const [hoverText, setHoverText] = useState("");
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -17,7 +19,7 @@ export function CustomCursor() {
 
   useEffect(() => {
     const updateCursor = (e: MouseEvent) => {
-      const size = isHovering || isVideoHover ? 80 : 20; // Default size 10px
+      const size = isHovering || isVideoHover || isCardHover ? 80 : 20;
       mouseX.set(e.clientX - size / 2);
       mouseY.set(e.clientY - size / 2);
 
@@ -27,18 +29,31 @@ export function CustomCursor() {
       ) as HTMLElement;
       if (!target) return;
 
+      // Check for video elements
       if (target.closest("[data-cursor='video']")) {
         setIsVideoHover(true);
         setIsHovering(false);
+        setIsCardHover(false);
+        return;
+      }
+
+      // Check for card elements
+      if (target.closest("[data-cursor='card']")) {
+        setIsCardHover(true);
+        setHoverText("Explore");
+        setIsHovering(false);
+        setIsVideoHover(false);
         return;
       }
 
       setIsVideoHover(false);
+      setIsCardHover(false);
+
+      // Check for interactive elements
       const isInteractive = target.closest("a, button, .cursor-pointer");
+      setIsHovering(!!isInteractive);
 
-      setIsHovering(!!isInteractive );
-
-      // **Detect background color**
+      // Detect background color
       let bgColor = window.getComputedStyle(target).backgroundColor;
       if (bgColor === "rgba(0, 0, 0, 0)") {
         // If it's transparent, check the parent
@@ -52,9 +67,9 @@ export function CustomCursor() {
       // Convert bg color to RGB values and check brightness
       const match = bgColor.match(/\d+/g);
       if (match) {
-        const r = parseInt(match[0]);
-        const g = parseInt(match[1]);
-        const b = parseInt(match[2]);
+        const r = Number.parseInt(match[0]);
+        const g = Number.parseInt(match[1]);
+        const b = Number.parseInt(match[2]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
         setIsDarkBackground(brightness < 128);
       }
@@ -69,7 +84,7 @@ export function CustomCursor() {
       document.removeEventListener("mouseleave", () => setIsVisible(false));
       document.removeEventListener("mouseenter", () => setIsVisible(true));
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, isHovering, isVideoHover, isCardHover]);
 
   return (
     <motion.div
@@ -78,17 +93,17 @@ export function CustomCursor() {
         x: smoothX,
         y: smoothY,
         backgroundColor:
-          isHovering || isVideoHover
+          isHovering || isVideoHover || isCardHover
             ? "white"
             : isDarkBackground
             ? "white"
             : "black",
         border:
-          isHovering || isVideoHover
+          isHovering || isVideoHover || isCardHover
             ? "2px solid rgba(255, 255, 255, 0.5)"
-            : "none", // White border when hovering
-        width: isHovering || isVideoHover ? 60 : 10,
-        height: isHovering || isVideoHover ? 60 : 10,
+            : "none",
+        width: isHovering || isVideoHover || isCardHover ? 60 : 10,
+        height: isHovering || isVideoHover || isCardHover ? 60 : 10,
         mixBlendMode: isHovering
           ? "difference"
           : isDarkBackground
@@ -96,24 +111,32 @@ export function CustomCursor() {
           : "normal",
       }}
       animate={{
-        scale: isHovering ? 1.3 : isVideoHover ? 1.5 : 1,
+        scale: isHovering ? 1.3 : isVideoHover ? 1.5 : isCardHover ? 1.4 : 1,
         opacity: isVisible ? 1 : 0,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      <motion.div>
-        {isVideoHover ? (
-          <motion.div
-            className="flex items-center justify-center w-full h-full bg-white rounded-full"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 300, damping: 15 }}
-          >
-            <Play size={50} strokeWidth={2} className="text-black" />
-          </motion.div>
-        ) : null}{" "}
-        {/* Add a fallback (null) or another element if needed */}
-      </motion.div>
+      {isVideoHover && (
+        <motion.div
+          className="flex items-center justify-center w-full h-full bg-white rounded-full"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+        >
+          <Play size={50} strokeWidth={1} className="text-black" />
+        </motion.div>
+      )}
+
+      {isCardHover && (
+        <motion.div
+          className="flex items-center justify-center w-full h-full bg-white rounded-full"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+        >
+          <span className="text-black text-sm font-medium">{hoverText}</span>
+        </motion.div>
+      )}
     </motion.div>
   );
 }

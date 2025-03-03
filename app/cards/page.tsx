@@ -59,6 +59,11 @@ export default function Cardsp() {
     <div className="relative min-h-screen bg-neutral-900 rounded-t-[100px] py-24">
       {/* Custom Cursor */}
       <motion.div
+        data-cursor="card"
+        whileHover={{
+          scale: 1.05,
+          transition: { duration: 0.3 },
+        }}
         className="fixed flex items-center justify-center w-24 h-24 bg-white text-black font-bold text-lg rounded-full pointer-events-none shadow-lg z-50"
         animate={{
           x: cursorPos.x - 48,
@@ -90,11 +95,12 @@ export default function Cardsp() {
             return (
               <div
                 key={project.id}
-                className={`relative project-card ${
-                  index % 2 === 0 ? "ml-[10%] mr-auto" : "mr-[10%] ml-auto"
+                className={`relative project-card w-full md:w-[40%] ${
+                  index % 2 === 0
+                    ? "md:ml-[10%] md:mr-auto"
+                    : "md:mr-[10%] md:ml-auto"
                 }`}
-                style={{ width: "40%" }}
-                data-cursor="explore" // ADDED: Helps custom cursor detect card hover
+                data-cursor="explore"
                 onMouseEnter={() => {
                   setIsHovered(true);
                   videoRef.current?.play();
@@ -106,12 +112,12 @@ export default function Cardsp() {
               >
                 {/* Card */}
                 <motion.div
-                  className="group relative overflow-hidden rounded-2xl"
-                  style={{
-                    transform: `translateY(${
-                      index % 2 === 0 ? "20px" : "-20px"
-                    })`,
+                  data-cursor="card"
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.3 },
                   }}
+                  className="group relative overflow-hidden rounded-2xl"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -137,11 +143,11 @@ export default function Cardsp() {
                     />
 
                     {/* Overlay */}
-                    <div className="absolute inset-0 " />
+                    <div className="absolute inset-0 transition-opacity duration-700 group-hover:opacity-0" />
                   </a>
                 </motion.div>
 
-                {/* Title & Description (Outside the Card) */}
+                {/* Title & Description */}
                 <div className="mt-4">
                   <h3 className="text-3xl font-bold text-white mb-1">
                     {project.title}
