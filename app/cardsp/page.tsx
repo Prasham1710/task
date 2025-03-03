@@ -42,7 +42,7 @@ const projects: Project[] = [
   },
 ];
 
-export function Cardsp() {
+export default function Cardsp() {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 

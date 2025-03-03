@@ -9,7 +9,7 @@ import AboutPage from "./about/page";
 import VideoSection from "./vdsection/page";
 import Contact from "./contact/page";
 import Dashboard from "./dasboard/page";
-import { Cardsp } from "./cardsp/page";
+import Cardsp  from "./Cardsp/page";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
