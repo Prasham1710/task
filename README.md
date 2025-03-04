@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Animation Task
 
-## Getting Started
+This project is a clone of various animations inspired by Cuberto.com, built using modern web technologies like Next.js, TypeScript, Framer Motion, and ShadCN UI.
 
-First, run the development server:
+## Features Implemented
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **On-hover Animations**: Smooth hover effects for interactive UI elements.
+- **Navbar & Sidebar**: Animated navigation and sidebar components.
+- **On-scroll Play**: Elements that animate or trigger actions when scrolled into view.
+- **On-hover Video Play**: Videos that play when hovered over.
+- **Custom Cursor Animations**:
+  - Changes color based on background (black on light, white on dark).
+  - Expands and displays 'Explore' text when hovering over cards.
+  - Changes size and color when hovering over buttons.
+  - Displays a play icon when hovering over videos.
+- **Featured Projects**: Showcases project sections with interactive animations.
+- **Footer**: Animated footer with smooth transitions.
+- **Spinning Contact**: Rotating text effect for the contact section.
+- **Drag Cards Animation**: Interactive draggable cards.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js** 
+- **TypeScript**
+- **Framer Motion**
+- **ShadCN UI**
+- **Tailwind CSS**
 
-## Learn More
+## Installation & Setup
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+# Clone the repository
+[git clone https://github.com/Prasham1710/task.git
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Navigate to the project folder
+cd task
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Install dependencies
+npm install  
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Start the development server
+npm run dev  
