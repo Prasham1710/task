@@ -10,6 +10,7 @@ import VideoSection from "./vdsection/page";
 import Contact from "./contact/page";
 import Dashboard from "./dasboard/page";
 import Cardsp from "./cards/page";
+import Footer from "./footer/Page";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -20,20 +21,20 @@ export default function Home() {
       <CustomCursor />
 
       {/* Header */}
-      <div className="top-2 left-0 right-0 flex items-center justify-between py-6 px-6 md:px-12 w-full">
-        <Button className="text-2xl font-semibold">cuberto</Button>
+      <div className="top-4 left-0 right-0 flex items-center justify-between py-8 px-8 md:px-16 w-full">
+        <Button className="text-4xl font-bold">cuberto</Button>
 
         {/* Hide Menu Icon When Sidebar is Open */}
         {!isSidebarOpen && (
-          <div className="flex items-center gap-6">
-            <span className="text-lg font-medium">menu</span>
+          <div className="flex items-center gap-8">
+            <span className="text-2xl font-semibold">menu</span>
             <Button
               variant="ghost"
               size="icon"
               className="text-black"
               onClick={() => setIsSidebarOpen(true)}
             >
-              <Menu className="h-10 w-10" />
+              <Menu className="h-12 w-12" />
             </Button>
           </div>
         )}
@@ -87,6 +88,7 @@ export default function Home() {
         <div className="hidden md:block">
           <Contact />
         </div>
+        <Footer />
       </main>
     </div>
   );

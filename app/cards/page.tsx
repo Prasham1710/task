@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-
 interface Project {
   id: number;
   title: string;
@@ -10,72 +9,42 @@ interface Project {
   image: string;
   video: string;
 }
-
 const projects: Project[] = [
   {
     id: 1,
     title: "Punto Pago",
     description: "The First Super-App in Latin America",
-    image: "/rc.jpg",
-    video: "/video.mp4",
+    image: "/mp1.png",
+    video: "/mp1.mp4",
   },
   {
     id: 2,
     title: "Kelvin Zero",
     description: "A digital product for passwordless authentication",
-    image: "/rc.jpg",
-    video: "/video.mp4",
+    image: "/mp4.png",
+    video: "/mp4.mp4",
   },
   {
     id: 3,
     title: "Secondly",
     description: "Astrology planner app: plan, achieve, thrive",
-    image: "/rc.jpg",
-    video: "/video.mp4",
+    image: "/mp3.png",
+    video: "/mp3.mp4",
   },
   {
     id: 4,
     title: "Riyadh",
     description: "Official website of the Saudi Arabia's capital",
-    image: "/rc.jpg",
-    video: "/video.mp4",
+    image: "/mp3.png",
+    video: "/mp3.mp4",
   },
 ];
-
 export default function Cardsp() {
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener("mousemove", moveCursor);
-    return () => window.removeEventListener("mousemove", moveCursor);
-  }, []);
-
   return (
     <div className="relative min-h-screen bg-neutral-900 rounded-t-[100px] py-24">
       {/* Custom Cursor */}
-      <motion.div
-        data-cursor="card"
-        whileHover={{
-          scale: 1.05,
-          transition: { duration: 0.3 },
-        }}
-        className="fixed flex items-center justify-center w-24 h-24 bg-white text-black font-bold text-lg rounded-full pointer-events-none shadow-lg z-50"
-        animate={{
-          x: cursorPos.x - 48,
-          y: cursorPos.y - 48,
-          scale: isHovered ? 1 : 0,
-          opacity: isHovered ? 1 : 0,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
-        Explore
-      </motion.div>
-
+      
       <div className="max-w-6xl mx-auto px-6">
         <motion.h2
           className="text-7xl font-bold mb-16 text-white italic text-center"
@@ -87,11 +56,10 @@ export default function Cardsp() {
           <br />
           projects
         </motion.h2>
-
         <div className="flex flex-col gap-12">
           {projects.map((project, index) => {
             const videoRef = useRef<HTMLVideoElement>(null);
-
+            const [isPlaying, setIsPlaying] = useState(false);
             return (
               <div
                 key={project.id}
@@ -128,10 +96,13 @@ export default function Cardsp() {
                     <video
                       ref={videoRef}
                       src={project.video}
-                      className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      className="absolute inset-0 w-full h-full object-cover"
                       muted
                       loop
                       playsInline
+                      onPlay={() => setIsPlaying(true)}
+                      onPause={() => setIsPlaying(false)}
+                      poster={project.image}
                     />
 
                     {/* Image Fallback */}
@@ -141,12 +112,8 @@ export default function Cardsp() {
                       fill
                       className="object-cover transition-opacity duration-500 group-hover:opacity-0"
                     />
-
-                    {/* Overlay */}
-                    <div className="absolute inset-0 transition-opacity duration-700 group-hover:opacity-0" />
                   </a>
                 </motion.div>
-
                 {/* Title & Description */}
                 <div className="mt-4">
                   <h3 className="text-3xl font-bold text-white mb-1">

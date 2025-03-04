@@ -6,7 +6,7 @@ export default function Dashboard() {
           We are a digital
           <br />
           <span className="inline-flex items-center gap-2 md:gap-4">
-            <div className="video-container w-[150px] h-[100px] sm:w-[180px] sm:h-[120px] md:w-[220px] md:h-[140px] rounded-[20px] sm:rounded-[25px] md:rounded-[30px] overflow-hidden bg-gray-300">
+            <div className="video-container w-[170px] h-[120px] sm:w-[180px] sm:h-[120px] md:w-[220px] md:h-[140px] rounded-[20px] sm:rounded-[25px] md:rounded-[80] overflow-hidden bg-gray-300">
               <video
                 autoPlay
                 loop

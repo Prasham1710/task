@@ -129,13 +129,14 @@ export function CustomCursor() {
 
       {isCardHover && (
         <motion.div
-          className="flex items-center justify-center w-full h-full bg-white rounded-full"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 300, damping: 15 }}
-        >
-          <span className="text-black text-sm font-medium">{hoverText}</span>
-        </motion.div>
+  className="flex items-center justify-center w-full h-full bg-white rounded-full"
+  initial={{ scale: 0.5 }} // Start slightly visible
+  animate={{ scale: 1 }} // Instant transition
+  transition={{ type: "spring", stiffness: 500, damping: 10 }} // Faster response
+>
+  <span className="text-black text-sm font-medium">{hoverText}</span>
+</motion.div>
+
       )}
     </motion.div>
   );
