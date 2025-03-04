@@ -11,7 +11,7 @@ import Contact from "./contact/page";
 import Dashboard from "./dasboard/page";
 import Cardsp from "./cards/page";
 import Footer from "./footer/Page";
-import LeftToRightDragCards from "./dragcards/page";
+import CubertoImageCards from "./dragcards/page";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -99,7 +99,7 @@ export default function Home() {
         <div className="hidden md:block">
           <Contact />
         </div>
-        <LeftToRightDragCards />
+        <CubertoImageCards />
         <Footer />
       </main>
     </div>
