@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Play } from "lucide-react";
+import { Play, Grab } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function CustomCursor() {
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVideoHover, setIsVideoHover] = useState(false);
-  const [isCardHover, setIsCardHover] = useState(false);
+  const [cursorType, setCursorType] = useState<
+    "default" | "hover" | "video" | "card" | "drag"
+  >("default");
   const [isVisible, setIsVisible] = useState(true);
   const [isDarkBackground, setIsDarkBackground] = useState(false);
   const [hoverText, setHoverText] = useState("");
@@ -19,72 +19,60 @@ export function CustomCursor() {
 
   useEffect(() => {
     const updateCursor = (e: MouseEvent) => {
-      const size = isHovering || isVideoHover || isCardHover ? 80 : 20;
-      mouseX.set(e.clientX - size / 2);
-      mouseY.set(e.clientY - size / 2);
-
-      const target = document.elementFromPoint(
-        e.clientX,
-        e.clientY
-      ) as HTMLElement;
+      const { clientX, clientY } = e;
+      const target = document.elementFromPoint(clientX, clientY) as HTMLElement;
       if (!target) return;
 
-      // Check for video elements
+      let newCursorType: typeof cursorType = "default";
+
       if (target.closest("[data-cursor='video']")) {
-        setIsVideoHover(true);
-        setIsHovering(false);
-        setIsCardHover(false);
-        return;
-      }
-
-      // Check for card elements
-      if (target.closest("[data-cursor='card']")) {
-        setIsCardHover(true);
+        newCursorType = "video";
+      } else if (target.closest("[data-cursor='card']")) {
+        newCursorType = "card";
         setHoverText("Explore");
-        setIsHovering(false);
-        setIsVideoHover(false);
-        return;
+      } else if (target.closest("[data-cursor='drag']")) {
+        newCursorType = "drag";
+        setHoverText("Drag");
+      } else if (target.closest("a, button, .cursor-pointer")) {
+        newCursorType = "hover";
       }
 
-      setIsVideoHover(false);
-      setIsCardHover(false);
-
-      // Check for interactive elements
-      const isInteractive = target.closest("a, button, .cursor-pointer");
-      setIsHovering(!!isInteractive);
+      setCursorType(newCursorType);
 
       // Detect background color
       let bgColor = window.getComputedStyle(target).backgroundColor;
-      if (bgColor === "rgba(0, 0, 0, 0)") {
-        // If it's transparent, check the parent
-        let parent = target.parentElement;
-        while (parent && bgColor === "rgba(0, 0, 0, 0)") {
-          bgColor = window.getComputedStyle(parent).backgroundColor;
-          parent = parent.parentElement;
-        }
+      let parent = target.parentElement;
+      while (parent && bgColor === "rgba(0, 0, 0, 0)") {
+        bgColor = window.getComputedStyle(parent).backgroundColor;
+        parent = parent.parentElement;
       }
 
       // Convert bg color to RGB values and check brightness
       const match = bgColor.match(/\d+/g);
       if (match) {
-        const r = Number.parseInt(match[0]);
-        const g = Number.parseInt(match[1]);
-        const b = Number.parseInt(match[2]);
-        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-        setIsDarkBackground(brightness < 128);
+        const [r, g, b] = match.map(Number);
+        setIsDarkBackground((r * 299 + g * 587 + b * 114) / 1000 < 128);
       }
+
+      // Adjust cursor position
+      const size = cursorType === "default" ? 10 : 60;
+      mouseX.set(clientX - size / 2);
+      mouseY.set(clientY - size / 2);
     };
 
+    const hideCursor = () => setIsVisible(false);
+    const showCursor = () => setIsVisible(true);
+
     document.addEventListener("mousemove", updateCursor);
-    document.addEventListener("mouseleave", () => setIsVisible(false));
-    document.addEventListener("mouseenter", () => setIsVisible(true));
+    document.addEventListener("mouseleave", hideCursor);
+    document.addEventListener("mouseenter", showCursor);
 
     return () => {
       document.removeEventListener("mousemove", updateCursor);
-      document.removeEventListener("mouseleave", () => setIsVisible(false));
-      document.removeEventListener("mouseenter", () => setIsVisible(true));
+      document.removeEventListener("mouseleave", hideCursor);
+      document.removeEventListener("mouseenter", showCursor);
     };
-  }, [mouseX, mouseY, isHovering, isVideoHover, isCardHover]);
+  }, [mouseX, mouseY, cursorType]);
 
   return (
     <motion.div
@@ -93,30 +81,41 @@ export function CustomCursor() {
         x: smoothX,
         y: smoothY,
         backgroundColor:
-          isHovering || isVideoHover || isCardHover
+          cursorType !== "default"
             ? "white"
             : isDarkBackground
             ? "white"
             : "black",
         border:
-          isHovering || isVideoHover || isCardHover
+          cursorType !== "default"
             ? "2px solid rgba(255, 255, 255, 0.5)"
             : "none",
-        width: isHovering || isVideoHover || isCardHover ? 60 : 10,
-        height: isHovering || isVideoHover || isCardHover ? 60 : 10,
-        mixBlendMode: isHovering
-          ? "difference"
-          : isDarkBackground
-          ? "difference"
-          : "normal",
+        width: cursorType !== "default" ? 60 : 10,
+        height: cursorType !== "default" ? 60 : 10,
+        mixBlendMode:
+          cursorType === "hover"
+            ? "difference"
+            : isDarkBackground
+            ? "difference"
+            : "normal",
       }}
       animate={{
-        scale: isHovering ? 1.3 : isVideoHover ? 1.5 : isCardHover ? 1.4 : 1,
+        scale:
+          cursorType === "hover"
+            ? 1.3
+            : cursorType === "video"
+            ? 1.5
+            : cursorType === "card"
+            ? 1.4
+            : cursorType === "drag"
+            ? 1.6
+            : 1,
         opacity: isVisible ? 1 : 0,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      {isVideoHover && (
+      {/* Play Button for Video Hover */}
+      {cursorType === "video" && (
         <motion.div
           className="flex items-center justify-center w-full h-full bg-white rounded-full"
           initial={{ scale: 0 }}
@@ -127,16 +126,16 @@ export function CustomCursor() {
         </motion.div>
       )}
 
-      {isCardHover && (
+      {/* Explore Text for Card Hover */}
+      {(cursorType === "card" || cursorType === "drag") && (
         <motion.div
-  className="flex items-center justify-center w-full h-full bg-white rounded-full"
-  initial={{ scale: 0.5 }} // Start slightly visible
-  animate={{ scale: 1 }} // Instant transition
-  transition={{ type: "spring", stiffness: 500, damping: 10 }} // Faster response
->
-  <span className="text-black text-sm font-medium">{hoverText}</span>
-</motion.div>
-
+          className="flex items-center justify-center w-full h-full bg-white rounded-full"
+          initial={{ scale: 0.5 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 500, damping: 10 }}
+        >
+          <span className="text-black text-sm font-medium">{hoverText}</span>
+        </motion.div>
       )}
     </motion.div>
   );

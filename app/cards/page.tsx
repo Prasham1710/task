@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+
 interface Project {
   id: number;
   title: string;
@@ -9,6 +10,7 @@ interface Project {
   image: string;
   video: string;
 }
+
 const projects: Project[] = [
   {
     id: 1,
@@ -34,51 +36,41 @@ const projects: Project[] = [
   {
     id: 4,
     title: "Riyadh",
-    description: "Official website of the Saudi Arabia's capital",
+    description: "Official website of Saudi Arabia's capital",
     image: "/mp3.png",
     video: "/mp3.mp4",
   },
 ];
+
 export default function Cardsp() {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div className="relative min-h-screen bg-neutral-900 rounded-t-[100px] py-24">
-      {/* Custom Cursor */}
-      
+      {/* Title */}
       <div className="max-w-6xl mx-auto px-6">
         <motion.h2
-          className="text-7xl font-bold mb-32 text-white italic text-center"
+          className="text-7xl font-bold mb-20 text-white italic text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          Featured
-          <br />
-          projects
+          Featured <br /> Projects
         </motion.h2>
-        <div className="flex flex-col gap-12">
+
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {projects.map((project, index) => {
             const videoRef = useRef<HTMLVideoElement>(null);
             const [isPlaying, setIsPlaying] = useState(false);
+
             return (
               <div
                 key={project.id}
-                className={`relative project-card w-full md:w-[39%] ${
-                  index % 2 === 0
-                    ? "md:ml-[10%] md:mr-auto"
-                    : "md:mr-[10%] md:ml-auto"
-                }`}
-                data-cursor="explore"
-                onMouseEnter={() => {
-                  setIsHovered(true);
-                  videoRef.current?.play();
-                }}
-                onMouseLeave={() => {
-                  setIsHovered(false);
-                  videoRef.current?.pause();
-                }}
+                className="relative project-card w-full"
+                onMouseEnter={() => videoRef.current?.play()}
+                onMouseLeave={() => videoRef.current?.pause()}
               >
-                {/* Card */}
+                {/* Card Container */}
                 <motion.div
                   data-cursor="card"
                   whileHover={{
@@ -92,7 +84,7 @@ export default function Cardsp() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <a className="block relative aspect-[4/5]">
-                    {/* Video Element */}
+                    {/* Video */}
                     <video
                       ref={videoRef}
                       src={project.video}
@@ -100,9 +92,9 @@ export default function Cardsp() {
                       muted
                       loop
                       playsInline
+                      poster={project.image}
                       onPlay={() => setIsPlaying(true)}
                       onPause={() => setIsPlaying(false)}
-                      poster={project.image}
                     />
 
                     {/* Image Fallback */}
@@ -114,9 +106,10 @@ export default function Cardsp() {
                     />
                   </a>
                 </motion.div>
+
                 {/* Title & Description */}
-                <div className="mt-4">
-                  <h3 className="text-3xl font-bold text-white mb-1">
+                <div className="mt-4 text-center md:text-left">
+                  <h3 className="text-3xl font-bold text-white">
                     {project.title}
                   </h3>
                   <p className="text-lg text-gray-300">{project.description}</p>

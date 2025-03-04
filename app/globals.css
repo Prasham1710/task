@@ -4,115 +4,63 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+/* Menu and Close Button Styling */
+.menu-button,
+.close-button {
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.menu-button:hover,
+.close-button:hover {
+  transform: scale(1.1);
+}
+
+.menu-button svg,
+.close-button svg {
+  width: 40px;
+  height: 40px;
+}
+
+/* Color Scheme */
 @layer base {
   :root {
-      --background: #ffffff;
-      --foreground: #171717;
-    }
-  
-@media (prefers-color-scheme: dark) {
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+
+  @media (prefers-color-scheme: dark) {
     :root {
       --background: #0a0a0a;
       --foreground: #ededed;
     }
   }
-  
-    /* Hide default cursor */
-    * {
-      cursor: none !important;
-    }
-  
-    html {
-      scroll-behavior: smooth;
-    }
-  
-    /* Rotating image styles */
-    .rotating-image {
-      transform-style: preserve-3d;
-      will-change: transform;
-    }
-  
-    .rotating-image img {
-      backface-visibility: hidden;
-    }
-  
-    /* Video container styles */
-    .video-container {
-      cursor: none;
-    }
-  
-    .video-hover:hover {
-      transform: scale(1.05);
-    }
-  
-    /* Animation keyframes */
-    @keyframes spin-slow {
-      from {
-        transform: rotate(0deg);
-      }
-  
-      to {
-        transform: rotate(360deg);
-      }
-    }
-  
-    .animate-spin-slow {
-      animation: spin-slow 10s linear infinite;
-    }
 
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+  html {
+    scroll-behavior: smooth;
   }
 }
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-/* globals.css */
+/* Custom Cursor */
 .custom-cursor {
   position: fixed;
   width: 8px;
   height: 8px;
-  background-color: black;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  will-change: transform;
-  transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease;
+  border: 1px dashed black;
+  background-color: transparent;
 }
 
 .custom-cursor-hover {
@@ -125,12 +73,10 @@
   width: 60px;
   height: 60px;
   background-color: rgba(50, 50, 50, 0.9);
-  /* Dark gray background */
   border: 2px solid rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, background-color 0.2s ease;
   animation: pulse 1.5s infinite ease-in-out;
 }
 
@@ -139,7 +85,6 @@
   align-items: center;
   justify-content: center;
   color: rgba(255, 255, 255, 0.9);
-  /* White Play icon */
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -149,9 +94,11 @@
   animation: pop 0.3s ease-in-out;
 }
 
-/* Smooth pulse animation for video cursor */
+/* Animations */
 @keyframes pulse {
-  0% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.7;
   }
@@ -160,14 +107,8 @@
     transform: scale(1.2);
     opacity: 1;
   }
-
-  100% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
 }
 
-/* Fade-in effect for Play button */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -180,7 +121,6 @@
   }
 }
 
-/* Pop animation for the Play icon */
 @keyframes pop {
   from {
     transform: scale(0.6);
@@ -195,6 +135,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -204,26 +145,11 @@
   animation: spin-slow 10s linear infinite;
 }
 
-* {
-  cursor: none !important;
-}
-
-/* Add this class to your video container */
+/* Video and Image Interactions */
 .video-container {
   cursor: none;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-/* Optional: Add a smooth transition for background color changes */
-.bg-black {
-  background-color: black;
-  transition: background-color 0.3s ease;
-}
-
-/* Optional: Style for video hover effect */
 .video-hover {
   transition: transform 0.3s ease;
 }
@@ -241,38 +167,37 @@ html {
   backface-visibility: hidden;
 }
 
-/* Add these responsive styles to your globals.css */
-
-/* Mobile responsiveness */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  /* Typography adjustments */
- 
-  
-  h2, .text-5xl, .text-6xl {
+
+  h2,
+  .text-5xl,
+  .text-6xl {
     font-size: 2.5rem !important;
   }
-  
-  h3, .text-3xl {
+
+  h3,
+  .text-3xl {
     font-size: 1.5rem !important;
   }
-  
-  /* Layout adjustments */
-  .px-24, .px-12 {
+
+  .px-24,
+  .px-12 {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
-  
-  .py-24, .py-12 {
+
+  .py-24,
+  .py-12 {
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
   }
-  
-  /* Grid adjustments */
-  .grid-cols-2, .grid-cols-3 {
+
+  .grid-cols-2,
+  .grid-cols-3 {
     grid-template-columns: 1fr !important;
   }
-  
-  /* Video container adjustments */
+
   .video-container {
     width: 100% !important;
     height: auto !important;
@@ -281,52 +206,23 @@ html {
     top: 0 !important;
     margin: 1rem 0 !important;
   }
-  
-  /* Sidebar adjustments */
+
   .w-1\/2 {
     width: 80% !important;
   }
-  
-  /* Custom cursor (hide on mobile) */
-  .custom-cursor {
-    display: none !important;
-  }
-  
-  /* Restore default cursor on mobile */
-  * {
-    cursor: auto !important;
-  }
-  
-  /* Adjust spacing */
+
   .gap-8 {
     gap: 1rem !important;
   }
-  
-  /* Adjust rotating image */
-  .rotating-image {
-    transform: none !important;
-  }
 }
 
-/* Touch device optimizations */
+/* Touch Device Optimizations */
 @media (hover: none) {
-  /* Restore default cursor behavior */
   * {
     cursor: auto !important;
   }
-  
-  /* Hide custom cursor on touch devices */
+
   .custom-cursor {
     display: none !important;
-  }
-  
-  /* Show hover states by default on touch */
-  .video-hover {
-    transform: scale(1.05) !important;
-  }
-  
-  /* Optimize buttons for touch */
-  button, a {
-    padding: 0.75rem !important;
   }
 }

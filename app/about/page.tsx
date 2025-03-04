@@ -21,14 +21,14 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className="bg-white">
-      <main className="flex items-center px-6 md:px-24 py-12 md:py-24">
+    <div className="bg-white mt-0">
+      <main className="flex items-center px-6 md:px-24 py-12 md:py-24 mt-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
           {/* Rotating Image */}
           <div className="flex justify-center">
             <div
               ref={imageRef}
-              className="w-full max-w-[200px] md:max-w-[300px] aspect-[4/5] bg-gray-100 rounded-3xl overflow-hidden"
+              className="w-full max-w-[200px] md:max-w-[300px] aspect-[4/5] overflow-hidden"
             >
               <img
                 src="/rc.jpg"

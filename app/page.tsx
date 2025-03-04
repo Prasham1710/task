@@ -1,6 +1,6 @@
 "use client";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidebarNav } from "@/components/sidebarn";
@@ -11,9 +11,21 @@ import Contact from "./contact/page";
 import Dashboard from "./dasboard/page";
 import Cardsp from "./cards/page";
 import Footer from "./footer/Page";
+import LeftToRightDragCards from "./dragcards/page";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Close sidebar when "Esc" key is pressed
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsSidebarOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -21,26 +33,27 @@ export default function Home() {
       <CustomCursor />
 
       {/* Header */}
-      <div className="top-4 left-0 right-0 flex items-center justify-between py-8 px-8 md:px-16 w-full">
+      <div className=" left-0 right-0 flex items-center justify-between py-8  md:px-16 w-full">
         <Button className="text-4xl font-bold">cuberto</Button>
 
         {/* Hide Menu Icon When Sidebar is Open */}
         {!isSidebarOpen && (
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 ml-auto">
+            {" "}
+            {/* Added ml-auto */}
             <span className="text-2xl font-semibold">menu</span>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-black"
+            <button
+              className="text-black p-3 md:p-4"
               onClick={() => setIsSidebarOpen(true)}
+              aria-label="Open menu"
             >
-              <Menu className="h-12 w-12" />
-            </Button>
+              <Menu className="h-10 w-10 md:h-12 md:w-12" />
+            </button>
           </div>
         )}
       </div>
 
-      {/* Sidebar */}
+      {/* Sidebar with AnimatePresence for smooth unmounting */}
       {isSidebarOpen && (
         <>
           {/* Dark Overlay */}
@@ -51,7 +64,7 @@ export default function Home() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
             onClick={() => setIsSidebarOpen(false)}
-          ></motion.div>
+          />
 
           {/* Sidebar Panel */}
           <motion.div
@@ -61,18 +74,16 @@ export default function Home() {
             transition={{ type: "tween", duration: 0.5 }}
             className="fixed right-0 top-0 h-full w-full md:w-1/2 bg-white z-50 shadow-lg px-6 pt-8"
           >
-            {/* Close Button (Aligned Properly) */}
-            <div className="absolute top-6 right-6">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-black"
+            {/* Close Button */}
+            <div className="absolute top-6 right-6 flex">
+              <button
+                className="text-black p-3 md:p-4"
                 onClick={() => setIsSidebarOpen(false)}
+                aria-label="Close menu"
               >
-                <X className="h-10 w-10" />
-              </Button>
+                <X className="h-12 w-20 md:h-12 md:w-12" />
+              </button>
             </div>
-
             {/* Sidebar Navigation */}
             <SidebarNav onClose={() => setIsSidebarOpen(false)} />
           </motion.div>
@@ -88,6 +99,7 @@ export default function Home() {
         <div className="hidden md:block">
           <Contact />
         </div>
+        <LeftToRightDragCards />
         <Footer />
       </main>
     </div>
