@@ -47,7 +47,7 @@ export default function Cardsp() {
       
       <div className="max-w-6xl mx-auto px-6">
         <motion.h2
-          className="text-7xl font-bold mb-16 text-white italic text-center"
+          className="text-7xl font-bold mb-32 text-white italic text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -63,7 +63,7 @@ export default function Cardsp() {
             return (
               <div
                 key={project.id}
-                className={`relative project-card w-full md:w-[40%] ${
+                className={`relative project-card w-full md:w-[39%] ${
                   index % 2 === 0
                     ? "md:ml-[10%] md:mr-auto"
                     : "md:mr-[10%] md:ml-auto"
@@ -91,7 +91,7 @@ export default function Cardsp() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <a className="block relative aspect-[3/4]">
+                  <a className="block relative aspect-[4/5]">
                     {/* Video Element */}
                     <video
                       ref={videoRef}
