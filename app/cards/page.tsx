@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion} from "framer-motion";
+import { useRef, useState, } from "react";
 interface Project {
   id: number;
   title: string;
@@ -46,16 +46,13 @@ export default function Cardsp() {
       {/* Custom Cursor */}
 
       <div className="max-w-6xl mx-auto px-6">
-        <motion.h2
+        <h2
           className="text-7xl font-bold mb-32 text-white italic text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
         >
           Featured
           <br />
           projects
-        </motion.h2>
+        </h2>
         <div className="flex flex-col gap-12">
           {projects.map((project, index) => {
             const videoRef = useRef<HTMLVideoElement>(null);

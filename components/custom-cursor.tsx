@@ -1,7 +1,6 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import { Play, Grab } from "lucide-react";
+import { Play} from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function CustomCursor() {
@@ -46,15 +45,11 @@ export function CustomCursor() {
         bgColor = window.getComputedStyle(parent).backgroundColor;
         parent = parent.parentElement;
       }
-
-      // Convert bg color to RGB values and check brightness
       const match = bgColor.match(/\d+/g);
       if (match) {
         const [r, g, b] = match.map(Number);
         setIsDarkBackground((r * 299 + g * 587 + b * 114) / 1000 < 128);
       }
-
-      // Adjust cursor position
       const size = cursorType === "default" ? 10 : 60;
       mouseX.set(clientX - size / 2);
       mouseY.set(clientY - size / 2);

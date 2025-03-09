@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 interface SidebarNavProps {
   onClose: () => void;
 }
@@ -24,7 +23,7 @@ export function SidebarNav({ onClose }: SidebarNavProps) {
   ];
 
   return (
-    <div className="flex h-full flex-col p-6 " data-cursor="sidebar">
+    <div className="flex h-full flex-col p-6 " >
       <div className="flex items-center justify-between mb-12">
         <div className="text-xl font-medium">cuberto</div>
       </div>

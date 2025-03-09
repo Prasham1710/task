@@ -8,24 +8,13 @@ import { CustomCursor } from "@/components/custom-cursor";
 import AboutPage from "./about/page";
 import VideoSection from "./vdsection/page";
 import Contact from "./contact/page";
-import Dashboard from "./dasboard/page";
+import Dashboard from "./dashboard/page";
 import Cardsp from "./cards/page";
 import Footer from "./footer/Page";
 import CubertoImageCards from "./dragcards/page";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  // Close sidebar when "Esc" key is pressed
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsSidebarOpen(false);
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -53,7 +42,7 @@ export default function Home() {
         )}
       </div>
 
-      {/* Sidebar with AnimatePresence for smooth unmounting */}
+      {/* Sidebar  */}
       {isSidebarOpen && (
         <>
           {/* Dark Overlay */}

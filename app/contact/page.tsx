@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <div className="fixed bottom-8 right-8 z-50">
       <motion.div
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.3 }}
         whileTap={{ scale: 0.95 }}
         animate={{ scale: [1, 1.05, 1] }}
         transition={{
